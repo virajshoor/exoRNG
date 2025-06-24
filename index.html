@@ -1,1 +1,139 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="ex0's RNG"/><link rel="apple-touch-icon"> <link rel="manifest" href="/manifest.json"/><title>ex0's RNG</title><script defer="defer" src="/static/js/main.326fce77.js"></script><link href="/static/css/main.b6ec531d.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="ex0's RNG"/><link rel="apple-touch-icon"> <link rel="manifest" href="/manifest.json"/><title>ex0's RNG</title><script defer="defer" src="/static/js/main.326fce77.js"></script><link href="/static/css/main.b6ec531d.css" rel="stylesheet">
+<style>
+.options-container-placeholder {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 2px rgba(0,0,0,0.15); /* Softer shadow, less opacity */
+  color: #333; /* Darker text for better readability */
+  text-align: center;
+  margin: 20px auto;
+  width: fit-content; /* Shrink to content */
+  max-width: 400px; /* Max width for responsiveness */
+}
+
+.options-container-placeholder h3 {
+  margin-top: 0;
+  margin-bottom: 20px; /* More space below heading */
+  color: #333;
+  font-size: 1.2em; /* Slightly larger heading */
+}
+
+.options-container-placeholder .form-row {
+  margin-bottom: 12px; /* Consistent spacing for rows */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center content within each row */
+}
+
+.options-container-placeholder .form-row label {
+  display: inline-block;
+  width: 90px; /* Increased width for labels */
+  margin-right: 8px; /* Slightly more space after label */
+  text-align: right;
+  color: #333;
+  font-size: 0.95em;
+}
+
+.options-container-placeholder .form-row input[type="number"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 120px;
+  color: #333;
+  font-size: 0.95em;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Added transition */
+}
+
+/* Input Field Focus Animation */
+.options-container-placeholder .form-row input[type="number"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.options-container-placeholder .radio-options-group {
+  display: inline-block; /* Keep radio options next to "Type:" label */
+  text-align: left; /* Align radio buttons and their labels to the left */
+}
+
+.options-container-placeholder .radio-options-group div {
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+.options-container-placeholder .radio-options-group div:last-child {
+  margin-bottom: 0;
+}
+
+.options-container-placeholder .radio-options-group input[type="radio"] {
+  margin-right: 5px;
+}
+.options-container-placeholder .radio-options-group label { /* Labels for radio buttons */
+  color: #333;
+  width: auto; /* Radio labels should size automatically */
+  text-align: left;
+  margin-right: 10px; /* Space after radio label */
+  font-size: 0.95em;
+}
+
+/* Adjustments for the main app if needed */
+#root + .options-container-placeholder {
+    margin-top: 25px; /* More space between React app and placeholder */
+}
+
+/* Animation for the generated number (conceptual) */
+@keyframes fadeInScaleUp {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px); /* Start slightly lower */
+  }
+  70% {
+    opacity: 0.8;
+    transform: scale(1.1) translateY(-5px); /* Overshoot a bit */
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* This class would need to be toggled by JavaScript on the number element in the React app */
+.number-animated {
+  display: inline-block; /* Necessary for transform to work well */
+  animation: fadeInScaleUp 0.5s ease-out forwards;
+}
+
+/* Styling for the actual number display if we could target it (conceptual) */
+/* Example: #root .window > p */
+/* We might want to ensure the number itself has some consistent styling for animation */
+/* For instance, if the number is inside a span: */
+/* #root .window > p > span.random-number-value { ... } */
+
+</style>
+</head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div>
+  <div class="options-container-placeholder">
+    <h3>Random Number Options</h3>
+    <div class="form-row">
+      <label for="minValue">Min Value:</label>
+      <input type="number" id="minValue" value="0" />
+    </div>
+    <div class="form-row">
+      <label for="maxValue">Max Value:</label>
+      <input type="number" id="maxValue" value="999000" />
+    </div>
+    <div class="form-row">
+      <label>Type:</label>
+      <div class="radio-options-group">
+        <div>
+          <input type="radio" id="integer" name="numberType" value="integer" checked />
+          <label for="integer">Integer</label>
+        </div>
+        <div>
+          <input type="radio" id="float" name="numberType" value="float" />
+          <label for="float">Float</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</body></html>
