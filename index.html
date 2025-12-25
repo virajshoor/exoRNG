@@ -1,139 +1,1224 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="ex0's RNG"/><link rel="apple-touch-icon"> <link rel="manifest" href="/manifest.json"/><title>ex0's RNG</title><script defer="defer" src="/static/js/main.326fce77.js"></script><link href="/static/css/main.b6ec531d.css" rel="stylesheet">
-<style>
-.options-container-placeholder {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px 2px rgba(0,0,0,0.15); /* Softer shadow, less opacity */
-  color: #333; /* Darker text for better readability */
-  text-align: center;
-  margin: 20px auto;
-  width: fit-content; /* Shrink to content */
-  max-width: 400px; /* Max width for responsiveness */
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ultimate AI-Powered Random Generator - Numbers, Dice, Lottery, Passwords & More!">
+    <meta name="theme-color" content="#6366f1">
+    <title>🎲 Ultimate Random Generator - AI Powered</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.options-container-placeholder h3 {
-  margin-top: 0;
-  margin-bottom: 20px; /* More space below heading */
-  color: #333;
-  font-size: 1.2em; /* Slightly larger heading */
-}
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-tertiary: #ec4899;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(148, 163, 184, 0.1);
+        }
 
-.options-container-placeholder .form-row {
-  margin-bottom: 12px; /* Consistent spacing for rows */
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Center content within each row */
-}
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(100, 116, 139, 0.1);
+        }
 
-.options-container-placeholder .form-row label {
-  display: inline-block;
-  width: 90px; /* Increased width for labels */
-  margin-right: 8px; /* Slightly more space after label */
-  text-align: right;
-  color: #333;
-  font-size: 0.95em;
-}
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
 
-.options-container-placeholder .form-row input[type="number"] {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 120px;
-  color: #333;
-  font-size: 0.95em;
-  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Added transition */
-}
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+            background-size: 300% 300%;
+            animation: gradientShift 15s ease infinite;
+            opacity: 0.1;
+        }
 
-/* Input Field Focus Animation */
-.options-container-placeholder .form-row input[type="number"]:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-  outline: none;
-}
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
 
-.options-container-placeholder .radio-options-group {
-  display: inline-block; /* Keep radio options next to "Type:" label */
-  text-align: left; /* Align radio buttons and their labels to the left */
-}
+        /* Floating Orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+            pointer-events: none;
+            z-index: -1;
+        }
 
-.options-container-placeholder .radio-options-group div {
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center;
-}
-.options-container-placeholder .radio-options-group div:last-child {
-  margin-bottom: 0;
-}
+        .orb1 { width: 300px; height: 300px; background: var(--accent-primary); top: 10%; left: 10%; animation-delay: 0s; }
+        .orb2 { width: 400px; height: 400px; background: var(--accent-secondary); bottom: 10%; right: 10%; animation-delay: 7s; }
+        .orb3 { width: 250px; height: 250px; background: var(--accent-tertiary); top: 50%; left: 50%; animation-delay: 14s; }
 
-.options-container-placeholder .radio-options-group input[type="radio"] {
-  margin-right: 5px;
-}
-.options-container-placeholder .radio-options-group label { /* Labels for radio buttons */
-  color: #333;
-  width: auto; /* Radio labels should size automatically */
-  text-align: left;
-  margin-right: 10px; /* Space after radio label */
-  font-size: 0.95em;
-}
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-50px, 50px) scale(0.9); }
+        }
 
-/* Adjustments for the main app if needed */
-#root + .options-container-placeholder {
-    margin-top: 25px; /* More space between React app and placeholder */
-}
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
 
-/* Animation for the generated number (conceptual) */
-@keyframes fadeInScaleUp {
-  0% {
-    opacity: 0;
-    transform: scale(0.8) translateY(10px); /* Start slightly lower */
-  }
-  70% {
-    opacity: 0.8;
-    transform: scale(1.1) translateY(-5px); /* Overshoot a bit */
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease;
+        }
 
-/* This class would need to be toggled by JavaScript on the number element in the React app */
-.number-animated {
-  display: inline-block; /* Necessary for transform to work well */
-  animation: fadeInScaleUp 0.5s ease-out forwards;
-}
+        .header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
 
-/* Styling for the actual number display if we could target it (conceptual) */
-/* Example: #root .window > p */
-/* We might want to ensure the number itself has some consistent styling for animation */
-/* For instance, if the number is inside a span: */
-/* #root .window > p > span.random-number-value { ... } */
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
 
-</style>
-</head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div>
-  <div class="options-container-placeholder">
-    <h3>Random Number Options</h3>
-    <div class="form-row">
-      <label for="minValue">Min Value:</label>
-      <input type="number" id="minValue" value="0" />
-    </div>
-    <div class="form-row">
-      <label for="maxValue">Max Value:</label>
-      <input type="number" id="maxValue" value="999000" />
-    </div>
-    <div class="form-row">
-      <label>Type:</label>
-      <div class="radio-options-group">
-        <div>
-          <input type="radio" id="integer" name="numberType" value="integer" checked />
-          <label for="integer">Integer</label>
+        /* Theme Toggle & Controls */
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .theme-toggle, .clear-history-btn, .export-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle:hover, .clear-history-btn:hover, .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            border-color: var(--accent-primary);
+        }
+
+        /* Mode Selector */
+        .mode-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease 0.3s backwards;
+        }
+
+        .mode-btn {
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 1rem;
+            border-radius: 16px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mode-btn .icon {
+            font-size: 2rem;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.5);
+        }
+
+        /* Main Content Grid */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            animation: fadeIn 1s ease 0.5s backwards;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Generator Panel */
+        .generator-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .generator-options {
+            margin-bottom: 2rem;
+        }
+
+        .option-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .option-group label {
+            display: block;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .option-group input[type="number"],
+        .option-group input[type="text"],
+        .option-group select,
+        .option-group textarea {
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 2px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 0.875rem 1rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .option-group input:focus,
+        .option-group select:focus,
+        .option-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        /* Generate Button */
+        .generate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            border-radius: 16px;
+            padding: 1.25rem 2rem;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
+        }
+
+        .generate-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .generate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .generate-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Result Display */
+        .result-display {
+            background: var(--bg-secondary);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .result-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            word-break: break-all;
+            animation: resultPopIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes resultPopIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .copy-btn {
+            margin-top: 1rem;
+            background: var(--accent-primary);
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        /* History Panel */
+        .history-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-height: 800px;
+            overflow-y: auto;
+        }
+
+        .history-panel h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .history-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            animation: slideInRight 0.3s ease;
+            transition: all 0.3s ease;
+        }
+
+        .history-item:hover {
+            transform: translateX(-5px);
+            border-color: var(--accent-primary);
+        }
+
+        .history-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .history-type {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+        }
+
+        .history-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .history-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            word-break: break-all;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Particle Canvas */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .mode-selector {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+
+            .generator-panel {
+                padding: 1.5rem;
+            }
+
+            .result-display {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Easter Eggs */
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px) rotate(-5deg); }
+            75% { transform: translateX(10px) rotate(5deg); }
+        }
+
+        .rainbow {
+            animation: rainbow 2s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            text-align: center;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+            font-size: 0.85rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <canvas id="particles"></canvas>
+
+    <div class="container">
+        <header class="header">
+            <h1>🎲 Ultimate Random Generator</h1>
+            <p>AI-Powered • Multifunctional • Beautiful</p>
+        </header>
+
+        <div class="controls-bar">
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme (T)">
+                <span id="theme-icon">🌙</span>
+                <span>Toggle Theme</span>
+            </button>
+            <button class="export-btn" onclick="exportHistory()" title="Export History (E)">
+                <span>📥</span>
+                <span>Export</span>
+            </button>
+            <button class="clear-history-btn" onclick="clearHistory()" title="Clear History (Delete)">
+                <span>🗑️</span>
+                <span>Clear History</span>
+            </button>
         </div>
-        <div>
-          <input type="radio" id="float" name="numberType" value="float" />
-          <label for="float">Float</label>
+
+        <div class="mode-selector" id="modeSelector">
+            <button class="mode-btn active" data-mode="number" onclick="switchMode('number')">
+                <span class="icon">🔢</span>
+                <span>Number</span>
+            </button>
+            <button class="mode-btn" data-mode="dice" onclick="switchMode('dice')">
+                <span class="icon">🎲</span>
+                <span>Dice</span>
+            </button>
+            <button class="mode-btn" data-mode="coin" onclick="switchMode('coin')">
+                <span class="icon">🪙</span>
+                <span>Coin Flip</span>
+            </button>
+            <button class="mode-btn" data-mode="lottery" onclick="switchMode('lottery')">
+                <span class="icon">🎰</span>
+                <span>Lottery</span>
+            </button>
+            <button class="mode-btn" data-mode="password" onclick="switchMode('password')">
+                <span class="icon">🔐</span>
+                <span>Password</span>
+            </button>
+            <button class="mode-btn" data-mode="team" onclick="switchMode('team')">
+                <span class="icon">👥</span>
+                <span>Team Picker</span>
+            </button>
         </div>
-      </div>
+
+        <div class="main-content">
+            <div class="generator-panel">
+                <div id="generatorContent"></div>
+                
+                <button class="generate-btn" onclick="generate()" id="generateBtn">
+                    <span>🎯 Generate</span>
+                </button>
+
+                <div class="result-display" id="resultDisplay">
+                    <div class="result-label">Your result will appear here</div>
+                    <div class="result-value" id="resultValue">?</div>
+                </div>
+            </div>
+
+            <div class="history-panel">
+                <h3>📜 History</h3>
+                <div id="historyList"></div>
+            </div>
+        </div>
     </div>
-  </div>
-</body></html>
+
+    <script>
+        // State Management
+        let currentMode = 'number';
+        let history = JSON.parse(localStorage.getItem('rng-history') || '[]');
+        let theme = localStorage.getItem('rng-theme') || 'dark';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initParticles();
+            switchMode('number');
+            renderHistory();
+            setupKeyboardShortcuts();
+        });
+
+        // Theme Management
+        function initTheme() {
+            if (theme === 'light') {
+                document.body.setAttribute('data-theme', 'light');
+                document.getElementById('theme-icon').textContent = '☀️';
+            }
+        }
+
+        function toggleTheme() {
+            theme = theme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', theme === 'light' ? 'light' : '');
+            document.getElementById('theme-icon').textContent = theme === 'light' ? '☀️' : '🌙';
+            localStorage.setItem('rng-theme', theme);
+        }
+
+        // Mode Switching
+        function switchMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.mode === mode);
+            });
+            renderModeOptions();
+        }
+
+        function renderModeOptions() {
+            const content = document.getElementById('generatorContent');
+            
+            const templates = {
+                number: `
+                    <div class="generator-options">
+                        <div class="option-group">
+                            <label>Min Value</label>
+                            <input type="number" id="minValue" value="1" />
+                        </div>
+                        <div class="option-group">
+                            <label>Max Value</label>
+                            <input type="number" id="maxValue" value="100" />
+                        </div>
+                        <div class="option-group">
+                            <label>Type</label>
+                            <select id="numberType">
+                                <option value="integer">Integer</option>
+                                <option value="float">Decimal (Float)</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label>Count</label>
+                            <input type="number" id="numberCount" value="1" min="1" max="100" />
+                        </div>
+                    </div>
+                `,
+                dice: `
+                    <div class="generator-options">
+                        <div class="option-group">
+                            <label>Number of Dice</label>
+                            <input type="number" id="diceCount" value="2" min="1" max="10" />
+                        </div>
+                        <div class="option-group">
+                            <label>Dice Type</label>
+                            <select id="diceType">
+                                <option value="6">D6 (6-sided)</option>
+                                <option value="4">D4 (4-sided)</option>
+                                <option value="8">D8 (8-sided)</option>
+                                <option value="10">D10 (10-sided)</option>
+                                <option value="12">D12 (12-sided)</option>
+                                <option value="20">D20 (20-sided)</option>
+                                <option value="100">D100 (100-sided)</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                coin: `
+                    <div class="generator-options">
+                        <div class="option-group">
+                            <label>Number of Flips</label>
+                            <input type="number" id="flipCount" value="1" min="1" max="100" />
+                        </div>
+                    </div>
+                `,
+                lottery: `
+                    <div class="generator-options">
+                        <div class="option-group">
+                            <label>Numbers to Pick</label>
+                            <input type="number" id="lotteryCount" value="6" min="1" max="20" />
+                        </div>
+                        <div class="option-group">
+                            <label>From Pool (1 to N)</label>
+                            <input type="number" id="lotteryPool" value="49" min="10" max="100" />
+                        </div>
+                        <div class="option-group">
+                            <label>
+                                <input type="checkbox" id="lotteryUnique" checked /> Unique Numbers
+                            </label>
+                        </div>
+                    </div>
+                `,
+                password: `
+                    <div class="generator-options">
+                        <div class="option-group">
+                            <label>Length</label>
+                            <input type="number" id="passwordLength" value="16" min="4" max="128" />
+                        </div>
+                        <div class="option-group">
+                            <label>Character Types</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="includeUppercase" checked />
+                                    <label for="includeUppercase">Uppercase (A-Z)</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="includeLowercase" checked />
+                                    <label for="includeLowercase">Lowercase (a-z)</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="includeNumbers" checked />
+                                    <label for="includeNumbers">Numbers (0-9)</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="includeSymbols" checked />
+                                    <label for="includeSymbols">Symbols (!@#$...)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                team: `
+                    <div class="generator-options">
+                        <div class="option-group">
+                            <label>Enter Names (one per line)</label>
+                            <textarea id="teamNames" rows="8" placeholder="Alice\nBob\nCharlie\nDiana\nEve"></textarea>
+                        </div>
+                        <div class="option-group">
+                            <label>Number of Teams</label>
+                            <input type="number" id="teamCount" value="2" min="2" max="10" />
+                        </div>
+                    </div>
+                `
+            };
+
+            content.innerHTML = templates[currentMode] || '';
+        }
+
+        // Generation Functions
+        function generate() {
+            let result;
+            
+            switch(currentMode) {
+                case 'number':
+                    result = generateNumber();
+                    break;
+                case 'dice':
+                    result = generateDice();
+                    break;
+                case 'coin':
+                    result = generateCoin();
+                    break;
+                case 'lottery':
+                    result = generateLottery();
+                    break;
+                case 'password':
+                    result = generatePassword();
+                    break;
+                case 'team':
+                    result = generateTeams();
+                    break;
+            }
+
+            displayResult(result);
+            addToHistory(result);
+            triggerAnimation();
+            
+            // Easter egg: Lucky number 777
+            if (result.toString().includes('777')) {
+                launchConfetti();
+                document.getElementById('resultDisplay').classList.add('rainbow');
+                setTimeout(() => {
+                    document.getElementById('resultDisplay').classList.remove('rainbow');
+                }, 2000);
+            }
+        }
+
+        function generateNumber() {
+            const min = parseFloat(document.getElementById('minValue').value);
+            const max = parseFloat(document.getElementById('maxValue').value);
+            const type = document.getElementById('numberType').value;
+            const count = parseInt(document.getElementById('numberCount').value);
+
+            if (count === 1) {
+                if (type === 'integer') {
+                    return Math.floor(Math.random() * (max - min + 1)) + min;
+                } else {
+                    return (Math.random() * (max - min) + min).toFixed(2);
+                }
+            } else {
+                const numbers = [];
+                for (let i = 0; i < count; i++) {
+                    if (type === 'integer') {
+                        numbers.push(Math.floor(Math.random() * (max - min + 1)) + min);
+                    } else {
+                        numbers.push((Math.random() * (max - min) + min).toFixed(2));
+                    }
+                }
+                return numbers.join(', ');
+            }
+        }
+
+        function generateDice() {
+            const count = parseInt(document.getElementById('diceCount').value);
+            const sides = parseInt(document.getElementById('diceType').value);
+            
+            const rolls = [];
+            let total = 0;
+            
+            for (let i = 0; i < count; i++) {
+                const roll = Math.floor(Math.random() * sides) + 1;
+                rolls.push(roll);
+                total += roll;
+            }
+            
+            return `🎲 ${rolls.join(' + ')} = ${total}`;
+        }
+
+        function generateCoin() {
+            const count = parseInt(document.getElementById('flipCount').value);
+            
+            if (count === 1) {
+                return Math.random() < 0.5 ? '🪙 Heads' : '🪙 Tails';
+            } else {
+                const flips = [];
+                let heads = 0, tails = 0;
+                
+                for (let i = 0; i < count; i++) {
+                    if (Math.random() < 0.5) {
+                        flips.push('H');
+                        heads++;
+                    } else {
+                        flips.push('T');
+                        tails++;
+                    }
+                }
+                
+                return `${flips.join(' ')} (H: ${heads}, T: ${tails})`;
+            }
+        }
+
+        function generateLottery() {
+            const count = parseInt(document.getElementById('lotteryCount').value);
+            const pool = parseInt(document.getElementById('lotteryPool').value);
+            const unique = document.getElementById('lotteryUnique').checked;
+            
+            const numbers = [];
+            
+            if (unique) {
+                while (numbers.length < count) {
+                    const num = Math.floor(Math.random() * pool) + 1;
+                    if (!numbers.includes(num)) {
+                        numbers.push(num);
+                    }
+                }
+                numbers.sort((a, b) => a - b);
+            } else {
+                for (let i = 0; i < count; i++) {
+                    numbers.push(Math.floor(Math.random() * pool) + 1);
+                }
+            }
+            
+            return `🎰 ${numbers.join(' - ')}`;
+        }
+
+        function generatePassword() {
+            const length = parseInt(document.getElementById('passwordLength').value);
+            const uppercase = document.getElementById('includeUppercase').checked;
+            const lowercase = document.getElementById('includeLowercase').checked;
+            const numbers = document.getElementById('includeNumbers').checked;
+            const symbols = document.getElementById('includeSymbols').checked;
+            
+            let charset = '';
+            if (uppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            if (lowercase) charset += 'abcdefghijklmnopqrstuvwxyz';
+            if (numbers) charset += '0123456789';
+            if (symbols) charset += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+            
+            if (!charset) {
+                return '❌ Select at least one character type!';
+            }
+            
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                password += charset.charAt(Math.floor(Math.random() * charset.length));
+            }
+            
+            return `🔐 ${password}`;
+        }
+
+        function generateTeams() {
+            const names = document.getElementById('teamNames').value
+                .split('\n')
+                .map(n => n.trim())
+                .filter(n => n);
+            
+            if (names.length === 0) {
+                return '❌ Enter at least one name!';
+            }
+            
+            const teamCount = parseInt(document.getElementById('teamCount').value);
+            
+            // Shuffle names
+            const shuffled = [...names].sort(() => Math.random() - 0.5);
+            
+            // Distribute into teams
+            const teams = Array.from({ length: teamCount }, () => []);
+            shuffled.forEach((name, i) => {
+                teams[i % teamCount].push(name);
+            });
+            
+            return teams.map((team, i) => 
+                `Team ${i + 1}: ${team.join(', ')}`
+            ).join('\n\n');
+        }
+
+        function displayResult(result) {
+            const resultValue = document.getElementById('resultValue');
+            resultValue.textContent = result;
+            resultValue.style.animation = 'none';
+            setTimeout(() => {
+                resultValue.style.animation = 'resultPopIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+            }, 10);
+
+            // Show copy button
+            const resultDisplay = document.getElementById('resultDisplay');
+            const existingBtn = resultDisplay.querySelector('.copy-btn');
+            if (existingBtn) existingBtn.remove();
+
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-btn';
+            copyBtn.textContent = '📋 Copy';
+            copyBtn.onclick = () => copyResult(result);
+            resultDisplay.appendChild(copyBtn);
+        }
+
+        function copyResult(text) {
+            navigator.clipboard.writeText(text.toString()).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        function addToHistory(result) {
+            const historyItem = {
+                mode: currentMode,
+                result: result.toString(),
+                timestamp: new Date().toISOString()
+            };
+            
+            history.unshift(historyItem);
+            if (history.length > 100) history = history.slice(0, 100);
+            
+            localStorage.setItem('rng-history', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const historyList = document.getElementById('historyList');
+            
+            if (history.length === 0) {
+                historyList.innerHTML = '<p style="color: var(--text-muted); text-align: center;">No history yet</p>';
+                return;
+            }
+            
+            historyList.innerHTML = history.map(item => {
+                const date = new Date(item.timestamp);
+                const timeStr = date.toLocaleTimeString();
+                const modeEmoji = {
+                    number: '🔢',
+                    dice: '🎲',
+                    coin: '🪙',
+                    lottery: '🎰',
+                    password: '🔐',
+                    team: '👥'
+                }[item.mode] || '🎯';
+                
+                return `
+                    <div class="history-item">
+                        <div class="history-item-header">
+                            <span class="history-type">${modeEmoji} ${item.mode}</span>
+                            <span class="history-time">${timeStr}</span>
+                        </div>
+                        <div class="history-value">${item.result}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function clearHistory() {
+            if (confirm('Clear all history?')) {
+                history = [];
+                localStorage.removeItem('rng-history');
+                renderHistory();
+            }
+        }
+
+        function exportHistory() {
+            if (history.length === 0) {
+                alert('No history to export!');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(history, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `rng-history-${Date.now()}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Animations
+        function triggerAnimation() {
+            const display = document.getElementById('resultDisplay');
+            display.classList.add('shake');
+            setTimeout(() => display.classList.remove('shake'), 500);
+        }
+
+        function launchConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            const confettiCount = 50;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animation = `confettiFall ${2 + Math.random() * 2}s linear`;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 4000);
+            }
+        }
+
+        // Particle Background
+        function initParticles() {
+            const canvas = document.getElementById('particles');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const particles = [];
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    radius: Math.random() * 2 + 1
+                });
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--accent-primary') + '40';
+                
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+            
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+
+        // Keyboard Shortcuts
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+                
+                switch(e.key.toLowerCase()) {
+                    case 'enter':
+                    case ' ':
+                        e.preventDefault();
+                        generate();
+                        break;
+                    case 't':
+                        toggleTheme();
+                        break;
+                    case 'e':
+                        exportHistory();
+                        break;
+                    case 'delete':
+                        clearHistory();
+                        break;
+                    case '1':
+                        switchMode('number');
+                        break;
+                    case '2':
+                        switchMode('dice');
+                        break;
+                    case '3':
+                        switchMode('coin');
+                        break;
+                    case '4':
+                        switchMode('lottery');
+                        break;
+                    case '5':
+                        switchMode('password');
+                        break;
+                    case '6':
+                        switchMode('team');
+                        break;
+                }
+            });
+        }
+
+        // Confetti Animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes confettiFall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
