@@ -1,8 +1,10 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "ex0's RNG",
+  "name": "ex0's Secure Random Number Generator",
+  "description": "Secure random number generator with profanity filter and safety features",
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#667eea",
+  "background_color": "#ffffff",
+  "icons": []
 }
