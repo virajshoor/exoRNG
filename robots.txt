@@ -1,3 +1,10 @@
+# Ultimate Random Generator - AI Powered
 # https://www.robotstxt.org/robotstxt.html
+
 User-agent: *
-Disallow:
+Allow: /
+
+# This is an open-source project
+# Feel free to index and share!
+
+Sitemap: /sitemap.xml
